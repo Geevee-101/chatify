@@ -1,0 +1,13 @@
+{
+  "name": "chatify-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "cd backend && pnpm install && cd ../frontend && pnpm install && pnpm run build",
+    "start": "cd backend && pnpm run start"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
