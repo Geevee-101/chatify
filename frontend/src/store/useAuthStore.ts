@@ -15,18 +15,27 @@ interface SignupData {
   password: string;
 }
 
+interface LoginData {
+  email: string;
+  password: string;
+}
+
 interface AuthStore {
   authUser: AuthUser | null;
   isCheckingAuth: boolean;
   isSigningUp: boolean;
+  isLoggingIn: boolean;
   checkAuth: () => void;
   signup: (data: SignupData) => void;
+  login: (data: LoginData) => void;
+  logout: () => void;
 }
 
 export const useAuthStore = create<AuthStore>((set) => ({
   authUser: null,
   isCheckingAuth: true,
   isSigningUp: false,
+  isLoggingIn: false,
 
   checkAuth: async () => {
     try {
@@ -51,6 +60,30 @@ export const useAuthStore = create<AuthStore>((set) => ({
       toast.error(error instanceof AxiosError ? error.response?.data?.message : "Signup failed. Please try again.");
     } finally {
       set({isSigningUp: false});
+    }
+  },
+
+  login: async (data: LoginData) => {
+    set({isLoggingIn: true});
+    try {
+      const res = await axiosInstance.post("/auth/login", data);
+      set({authUser: res.data});
+
+      toast.success("Logged in successfully");
+    } catch (error) {
+      toast.error(error instanceof AxiosError ? error.response?.data?.message : "Signup failed. Please try again.");
+    } finally {
+      set({isLoggingIn: false});
+    }
+  },
+
+  logout: async () => {
+    try {
+      await axiosInstance.post("/auth/logout");
+      set({authUser: null});
+      toast.success("Logged out successfully");
+    } catch (error) {
+      toast.error(error instanceof AxiosError ? error.response?.data?.message : "Logout failed. Please try again.");
     }
   }
 }));

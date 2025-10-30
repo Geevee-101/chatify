@@ -99,7 +99,8 @@ function SignUpPage() {
             {/* IMAGE COLUMN - RIGHT SIDE */}
             <div className="md:w-1/2 hidden md:flex md:flex-col items-center justify-center p-6 bg-gradient-to-bl from-slate-800/200 to-transparent">
               <img 
-                src="signup.png"                alt="Sign Up Illustration"
+                src="signup.png"
+                alt="Sign Up Illustration"
                 className="w-full h-auto object-contain"
               />
               <div className="mt-6 text-center">
