@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { useChatStore } from "../store/useChatStore";
-import NoChatsFound from "./NoChatsFound";
 import UsersLoadingSkeleton from "./UserLoadingSkeleton";
 
 function ContactsList() {
