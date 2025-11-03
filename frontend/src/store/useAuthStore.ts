@@ -7,6 +7,7 @@ interface AuthUser {
   name: string;
   _id: number;
   age: number;
+  profilePic: string;
 }
 
 interface SignupData {
@@ -29,6 +30,7 @@ interface AuthStore {
   signup: (data: SignupData) => void;
   login: (data: LoginData) => void;
   logout: () => void;
+  updateProfile: (data: Partial<AuthUser>) => void;
 }
 
 export const useAuthStore = create<AuthStore>((set) => ({
@@ -85,5 +87,16 @@ export const useAuthStore = create<AuthStore>((set) => ({
     } catch (error) {
       toast.error(error instanceof AxiosError ? error.response?.data?.message : "Logout failed. Please try again.");
     }
-  }
+  },
+
+  updateProfile: async(data) => {
+    try {
+      const res = await axiosInstance.put("/auth/update-profile", data);
+      set({authUser: res.data});
+      toast.success("Profile updated successfully");
+    } catch (error) {
+      console.log("Profile update error:", error);
+      toast.error(error instanceof AxiosError ? error.response?.data?.message : "Profile update failed. Please try again.");
+    }
+  },
 }));

@@ -15,6 +15,8 @@ interface ChatStore {
     toggleSound: () => void;
     setActiveTab: (tab: 'chats' | 'contacts') => void;
     setSelectedUser: (selectedUser: any) => void;
+    getAllContacts: () => Promise<void>;
+    getMyChatPartners: () => Promise<void>;
 }
 
 export const useChatStore = create<ChatStore>((set,get) => ({
@@ -37,7 +39,7 @@ export const useChatStore = create<ChatStore>((set,get) => ({
     getAllContacts: async () => {
         set({isUsersLoading: true});
         try {
-            const res = await axiosInstance('/api/contacts');
+            const res = await axiosInstance('/messages/contacts');
             set({allContacts: res.data});
         } catch (error) {
             toast.error(error instanceof AxiosError ? error.response?.data?.message : 'Failed to fetch contacts');
@@ -48,7 +50,7 @@ export const useChatStore = create<ChatStore>((set,get) => ({
     getMyChatPartners: async () => {
         set({isMessagesLoading: true});
         try {
-            const res = await axiosInstance('/api/chats');
+            const res = await axiosInstance('/messages/chats');
             set({chats: res.data});
         } catch (error) {
             toast.error(error instanceof AxiosError ? error.response?.data?.message : 'Failed to fetch contacts');
