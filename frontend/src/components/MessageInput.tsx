@@ -17,14 +17,14 @@ function MessageInput () {
     if(!text.trim() && !imagePreview) return;
     if(isSoundEnabled) playRandomKeyStrokeSound()
 
-      sendMessage({
-        text: text.trim(),
-        image: imagePreview
-      })
-      // reset text, image, and fileInputRef
-      setText("")
-      setImagePreview(null)
-      if(fileInputRef.current) fileInputRef.current.value="";
+    sendMessage({
+      text: text.trim(),
+      image: imagePreview
+    })
+    // reset text, image, and fileInputRef
+    setText("")
+    setImagePreview(null)
+    if(fileInputRef.current) fileInputRef.current.value="";
   }
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {

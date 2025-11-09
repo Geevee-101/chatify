@@ -1,9 +1,11 @@
 import { useEffect } from "react";
 import { useChatStore } from "../store/useChatStore";
 import UsersLoadingSkeleton from "./UserLoadingSkeleton";
+import { useAuthStore } from "../store/useAuthStore";
 
 function ContactsList() {
   const { getAllContacts, allContacts, isUsersLoading, setSelectedUser } = useChatStore();
+  const { onlineUsers } = useAuthStore();
 
   useEffect(() => {
     getAllContacts()
@@ -20,13 +22,12 @@ function ContactsList() {
         onClick={() => setSelectedUser(contact)}
       >
        <div className="flex items-center gap-3">
-        {/* TODO: FIX THIS ONLINE STATUS AND MAKE IT WORK WITH SOCKET */}
-        <div className={`avatar avatar-online`}>
+        <div className={`avatar ${onlineUsers.includes(contact._id) ? "avatar-online" : "avatar-offline"}`}>
           <div className="size-12 rounded-full">
-            <img src={contact.profilePic || "/avatar.png"} alt={contact.fullName} />
+            <img src={contact.profilePic || "/avatar.png"} alt={contact.name} />
           </div>
         </div>
-        <h4 className="text-slate-200 font-medium truncate">{contact.fullName}</h4>
+        <h4 className="text-slate-200 font-medium truncate">{contact.name}</h4>
       </div>
     </div>
     ))}
