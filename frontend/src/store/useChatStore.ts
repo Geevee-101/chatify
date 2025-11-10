@@ -19,7 +19,9 @@ interface ChatStore {
   getAllContacts: () => Promise<void>;
   getMyChatPartners: () => Promise<void>;
   getMessagesByUserId: (userId: any) => Promise<void>;
-  sendMessage: (messageData: any) => Promise<void>
+  sendMessage: (messageData: any) => Promise<void>;
+  subscribeToMessages: () => void;
+  unsubscribeFromMessages: () => void;
 }
 
 export const useChatStore = create<ChatStore>((set,get) => ({
@@ -91,10 +93,37 @@ export const useChatStore = create<ChatStore>((set,get) => ({
 
     try {
       const res = await axiosInstance.post(`/messages/send/${selectedUser._id}`, messageData)
-      set({messages: messages.map(msg => msg._id === tempId ? res.data : msg)})
+      set({ messages: messages.concat(res.data) });
     } catch (error) {
       set({messages: messages});
       toast.error(error instanceof AxiosError ? error.response?.data?.message : 'Something went wrong');
     }
-  }
+  },
+
+  subscribeToMessages: () => {
+    const { selectedUser, isSoundEnabled } = get();
+    if (!selectedUser) return;
+
+    const socket = useAuthStore.getState().socket;
+
+    socket.on("newMessage", (newMessage: any) => {
+      const isMessageInCurrentChat = newMessage.senderId === selectedUser._id || newMessage.receiverId === selectedUser._id;
+      if (!isMessageInCurrentChat) return;
+
+      const currentMessages = get().messages;
+      set({messages: [...currentMessages, newMessage]});
+
+      if(isSoundEnabled) {
+        const notificationSound = new Audio("/sounds/notification.mp3")
+        
+        notificationSound.currentTime = 0 // reset to start
+        notificationSound.play().catch((e) => console.log("Audio play failed:", e))
+      }
+    });
+  },
+
+  unsubscribeFromMessages: () => {
+    const socket = useAuthStore.getState().socket;
+    socket.off("newMessage");
+  },
 }));
