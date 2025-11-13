@@ -45,7 +45,7 @@ function ResetDatabase() {
 
   return (
     <button 
-      className="auth-link hover:cursor-pointer"
+      className="auth-link hover:cursor-pointer min-w-[140px]"
       onClick={() => handleResetDatabase(setIsResetting)}
       disabled={isResetting}
     >

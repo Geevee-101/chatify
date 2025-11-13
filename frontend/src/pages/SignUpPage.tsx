@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAuthStore } from "../store/useAuthStore";
-import BorderAnimatedContainer from "../components/BorderAnimatedContainer";
+import BorderContainer from "../components/BorderContainer";
 import { MessageCircleIcon, LockIcon, MailIcon, UserIcon, LoaderIcon } from "lucide-react";
 import { Link } from "react-router";
 
@@ -20,7 +20,7 @@ function SignUpPage() {
   return (
     <div className="w-full flex items-center justify-center p-4 bg-slate-900">
       <div className="relative w-full max-w-6xl 2xl:h-[800px] h-[650px]">
-        <BorderAnimatedContainer>
+        <BorderContainer>
           <div className="w-full flex flex-col md:flex-row">
             {/* FORM COLUMN - LEFT SIDE */}
             <div className="md:w-1/2 p-8 flex items-center justify-center md:border-r border-slate-600/30">
@@ -99,21 +99,16 @@ function SignUpPage() {
             {/* IMAGE COLUMN - RIGHT SIDE */}
             <div className="md:w-1/2 hidden md:flex md:flex-col items-center justify-center p-6 bg-gradient-to-bl from-slate-800/200 to-transparent">
               <img 
-                src="signup.png"
-                alt="Sign Up Illustration"
+                src="chatify-logo.png"
+                alt="Chatify Logo"
                 className="w-full h-auto object-contain"
               />
               <div className="mt-6 text-center">
-                <h3 className="text-xl font-medium text-cyan-400">Start Your Journey Today</h3>
-                <div className="mt-4 flex justify-center gap-4">
-                  <span className="auth-badge">Fast</span>
-                  <span className="auth-badge">Easy Setup</span>
-                  <span className="auth-badge">Private</span>
-                </div>
+                <h3 className="text-xl font-medium text-cyan-400">Start chatting online today</h3>
               </div>
             </div>
           </div>
-        </BorderAnimatedContainer>
+        </BorderContainer>
       </div>
     </div>
   );
