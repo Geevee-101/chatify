@@ -4,22 +4,45 @@ import toast from 'react-hot-toast';
 import { AxiosError } from 'axios';
 import { useAuthStore } from './useAuthStore';
 
+interface User {
+  _id: string;
+  name: string;
+  email: string;
+  profilePic: string;
+  createdAt: string;
+}
+
+interface Message {
+  _id: string;
+  senderId: string | number;
+  receiverId: string;
+  text?: string;
+  image?: string;
+  createdAt: string;
+  isOptimistic?: boolean;
+}
+
+interface MessageData {
+  text?: string;
+  image?: string;
+}
+
 interface ChatStore {
-  allContacts: Array<any>;
-  chats: Array<any>;
-  messages: Array<any>;
+  allContacts: User[];
+  chats: User[];
+  messages: Message[];
   activeTab: 'chats' | 'contacts';
-  selectedUser: any;
+  selectedUser: User | null;
   isUsersLoading: boolean;
   isMessagesLoading: boolean;
   isSoundEnabled: boolean;
   toggleSound: () => void;
   setActiveTab: (tab: 'chats' | 'contacts') => void;
-  setSelectedUser: (selectedUser: any) => void;
+  setSelectedUser: (selectedUser: User | null) => void;
   getAllContacts: () => Promise<void>;
   getMyChatPartners: () => Promise<void>;
-  getMessagesByUserId: (userId: any) => Promise<void>;
-  sendMessage: (messageData: any) => Promise<void>;
+  getMessagesByUserId: (userId: string) => Promise<void>;
+  sendMessage: (messageData: MessageData) => Promise<void>;
   subscribeToMessages: () => void;
   unsubscribeFromMessages: () => void;
 }
@@ -78,11 +101,13 @@ export const useChatStore = create<ChatStore>((set,get) => ({
     const { selectedUser, messages } = get()
     const { authUser } = useAuthStore.getState()
 
+    if (!selectedUser || !authUser) return;
+
     const tempId = `temp-${Date.now}`
 
-    const optimisticMessage = {
+    const optimisticMessage: Message = {
       _id: tempId,
-      senderId: authUser?._id,
+      senderId: authUser._id,
       receiverId: selectedUser._id,
       text: messageData.text,
       image: messageData.image,
@@ -106,7 +131,7 @@ export const useChatStore = create<ChatStore>((set,get) => ({
 
     const socket = useAuthStore.getState().socket;
 
-    socket.on("newMessage", (newMessage: any) => {
+    socket?.on("newMessage", (newMessage: Message) => {
       const isMessageInCurrentChat = newMessage.senderId === selectedUser._id || newMessage.receiverId === selectedUser._id;
       if (!isMessageInCurrentChat) return;
 
@@ -124,6 +149,6 @@ export const useChatStore = create<ChatStore>((set,get) => ({
 
   unsubscribeFromMessages: () => {
     const socket = useAuthStore.getState().socket;
-    socket.off("newMessage");
+    socket?.off("newMessage");
   },
 }));

@@ -2,7 +2,7 @@ import {create} from "zustand";
 import { axiosInstance } from "../lib/axios";
 import toast from "react-hot-toast";
 import { AxiosError } from "axios";
-import { io } from "socket.io-client";
+import { io, Socket } from "socket.io-client";
 
 const BASE_URL = import.meta.env.MODE === "development" ? "http://localhost:3000" : "/";
 
@@ -29,7 +29,7 @@ interface AuthStore {
   isCheckingAuth: boolean;
   isSigningUp: boolean;
   isLoggingIn: boolean;
-  socket: any;
+  socket: Socket | null;
   onlineUsers: string[];
   checkAuth: () => void;
   signup: (data: SignupData) => void;
@@ -132,6 +132,6 @@ export const useAuthStore = create<AuthStore>((set,get) => ({
   },
 
   disconnectSocket: () => {
-    if(get().socket?.connected) get().socket.disconnect()
+    if(get().socket?.connected) get().socket?.disconnect()
   },
 }));
