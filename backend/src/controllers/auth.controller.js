@@ -4,6 +4,7 @@ import { generateToken } from "../lib/utils.js";
 import { sendWelcomeEmail } from "../emails/emailHandlers.js";
 import { ENV } from "../lib/env.js";
 import cloudinary from "../lib/cloudinary.js";
+import { createUser } from "../lib/userService.js";
 
 export const signup = async (req, res) => {
   const { name, email, password } = req.body;
@@ -30,19 +31,9 @@ export const signup = async (req, res) => {
       return res.status(409).json({ message: "Email already in use" });
     }
 
-    // hash password
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
+    const savedUser = await createUser( name, email, password);
 
-    // create new user
-    const newUser = new User({
-      name,
-      email,
-      password: hashedPassword,
-    });
-
-    if (newUser) {
-      const savedUser = await newUser.save();
+    if (savedUser) {
       generateToken(savedUser._id, res);
 
       res.status(201).json({

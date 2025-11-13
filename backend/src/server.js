@@ -4,6 +4,7 @@ import path from "path";
 
 import authRoutes from "./routes/auth.route.js";
 import messageRoutes from "./routes/message.route.js";
+import resetRoute from "./routes/reset.route.js";
 import { connectDB } from "./lib/db.js";
 import cors from "cors";
 
@@ -20,6 +21,7 @@ app.use(cookieParser());
 
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
+app.use("/api/reset", resetRoute);
 
 // make ready for deployment
 if (ENV.NODE_ENV === "production") {
