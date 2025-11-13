@@ -19,7 +19,7 @@ function MessageInput () {
 
     sendMessage({
       text: text.trim(),
-      image: imagePreview
+      image: imagePreview ?? undefined
     })
     // reset text, image, and fileInputRef
     setText("")
