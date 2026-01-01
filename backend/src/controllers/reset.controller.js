@@ -1,6 +1,5 @@
 import Message from "../models/Message.js";
 import User from "../models/User.js";
-import bcrypt from "bcryptjs";
 import { createUser } from "../lib/userService.js";
 import cloudinary from "../lib/cloudinary.js";
 
@@ -49,21 +48,11 @@ const shinjiToAsukaMessages = [
 export const resetDatabase = async (req, res) => {
   try {
     // Delete everything first
-    Message.deleteMany({})
-      .then(() => {
-        console.log("All messages deleted successfully.");
-      })
-      .catch((err) => {
-        console.error("Error deleting messages:", err);
-      });
+    await Message.deleteMany({});
+    console.log("All messages deleted successfully.");
 
-    User.deleteMany({})
-      .then(() => {
-        console.log("All users deleted successfully.");
-      })
-      .catch((err) => {
-        console.error("Error deleting users:", err);
-      });
+    await User.deleteMany({});
+    console.log("All users deleted successfully.");
 
     // Create default users
     await Promise.all(
