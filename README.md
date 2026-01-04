@@ -67,7 +67,7 @@ Create a `.env` file in the `backend` directory with the following configuration
 
 ```env
 PORT=3000
-MONGO_URI=your_mongodb_connection_string
+MONGO_URL=your_mongodb_connection_string
 
 NODE_ENV=development
 
@@ -186,7 +186,7 @@ chatter-app/
 ### Backend Required Variables
 
 - `PORT` - Server port (default: 3000)
-- `MONGO_URI` - MongoDB connection string
+- `MONGO_URL` - MongoDB connection string
 - `JWT_SECRET` - Secret key for JWT tokens
 - `NODE_ENV` - Environment (development/production)
 - `RESEND_API_KEY` - Resend API key for emails
