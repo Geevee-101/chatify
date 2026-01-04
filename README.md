@@ -1,10 +1,10 @@
-# Chatify App
+# Chatter App
 
 A modern real-time chat application built with React, Node.js, Express, Socket.IO, and MongoDB.
 
 ## 🌐 Live Demo
 
-Check out the live application: [https://chatify-dlfs9.sevalla.app/](https://chatify-dlfs9.sevalla.app/)
+Check out the live application: []()
 
 ## ✨ Features
 
@@ -19,6 +19,7 @@ Check out the live application: [https://chatify-dlfs9.sevalla.app/](https://cha
 ## 🛠️ Tech Stack
 
 ### Frontend
+
 - React 19
 - TypeScript
 - Vite
@@ -29,6 +30,7 @@ Check out the live application: [https://chatify-dlfs9.sevalla.app/](https://cha
 - Lucide React (icons)
 
 ### Backend
+
 - Node.js
 - Express 5
 - MongoDB with Mongoose
@@ -51,7 +53,7 @@ Check out the live application: [https://chatify-dlfs9.sevalla.app/](https://cha
 
 ```bash
 git clone <repository-url>
-cd chatify-app
+cd chatter-app
 ```
 
 ### 2. Backend Setup
@@ -74,7 +76,7 @@ JWT_SECRET=your_jwt_secret_key
 RESEND_API_KEY=your_resend_api_key
 
 EMAIL_FROM=your_email@domain.com
-EMAIL_FROM_NAME=Chatify
+EMAIL_FROM_NAME=Chatter
 
 CLIENT_URL=http://localhost:5173
 
@@ -104,12 +106,14 @@ VITE_API_URL=http://localhost:5001
 **Option 1: Run both servers separately**
 
 In one terminal (backend):
+
 ```bash
 cd backend
 npm run dev
 ```
 
 In another terminal (frontend):
+
 ```bash
 cd frontend
 npm run dev
@@ -118,6 +122,7 @@ npm run dev
 **Option 2: Production build**
 
 From the root directory:
+
 ```bash
 npm run build
 npm start
@@ -126,13 +131,14 @@ npm start
 ### 5. Access the Application
 
 Open your browser and navigate to:
+
 - Frontend: `http://localhost:5173` (Vite default)
 - Backend API: `http://localhost:3000`
 
 ## 📁 Project Structure
 
 ```
-chatify-app/
+chatter-app/
 ├── backend/
 │   ├── src/
 │   │   ├── controllers/    # Route controllers
@@ -159,14 +165,17 @@ chatify-app/
 ## 🔧 Available Scripts
 
 ### Root Directory
+
 - `npm run build` - Build both frontend and backend
 - `npm start` - Start the production server
 
 ### Backend
+
 - `npm run dev` - Start development server with nodemon
 - `npm start` - Start production server
 
 ### Frontend
+
 - `npm run dev` - Start Vite development server
 - `npm run build` - Build for production
 - `npm run preview` - Preview production build
@@ -175,6 +184,7 @@ chatify-app/
 ## 🔐 Environment Variables
 
 ### Backend Required Variables
+
 - `PORT` - Server port (default: 3000)
 - `MONGO_URI` - MongoDB connection string
 - `JWT_SECRET` - Secret key for JWT tokens
@@ -190,5 +200,5 @@ chatify-app/
 - `ARCJET_ENV` - Arcjet environment
 
 ### Frontend Required Variables
-- `VITE_API_URL` - Backend API URL
 
+- `VITE_API_URL` - Backend API URL

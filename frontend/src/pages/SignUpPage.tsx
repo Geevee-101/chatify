@@ -1,21 +1,27 @@
 import { useState } from "react";
 import { useAuthStore } from "../store/useAuthStore";
 import BorderContainer from "../components/BorderContainer";
-import { MessageCircleIcon, LockIcon, MailIcon, UserIcon, LoaderIcon } from "lucide-react";
+import {
+  MessageCircleIcon,
+  LockIcon,
+  MailIcon,
+  UserIcon,
+  LoaderIcon,
+} from "lucide-react";
 import { Link } from "react-router";
 
 function SignUpPage() {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
+    name: "",
+    email: "",
+    password: "",
   });
-  const {signup, isSigningUp} = useAuthStore();
+  const { signup, isSigningUp } = useAuthStore();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     signup(formData);
-  }
+  };
 
   return (
     <div className="w-full flex items-center justify-center p-4 bg-slate-900">
@@ -28,7 +34,9 @@ function SignUpPage() {
                 {/* HEADER */}
                 <div className="text-center mb-8">
                   <MessageCircleIcon className="w-12 h-12 mx-auto text-slate-400 mb-4" />
-                  <h2 className="text-2xl font-bold text-slate-200 mb-2">Create Account</h2>
+                  <h2 className="text-2xl font-bold text-slate-200 mb-2">
+                    Create Account
+                  </h2>
                   <p className="text-slate-400">Sign up for a new account</p>
                 </div>
 
@@ -42,7 +50,9 @@ function SignUpPage() {
                       <input
                         type="text"
                         value={formData.name}
-                        onChange={(e) => setFormData({...formData, name: e.target.value})}
+                        onChange={(e) =>
+                          setFormData({ ...formData, name: e.target.value })
+                        }
                         className="input"
                         placeholder="John Doe"
                       />
@@ -57,7 +67,9 @@ function SignUpPage() {
                       <input
                         type="email"
                         value={formData.email}
-                        onChange={(e) => setFormData({...formData, email: e.target.value})}
+                        onChange={(e) =>
+                          setFormData({ ...formData, email: e.target.value })
+                        }
                         className="input"
                         placeholder="johndoe@gmail.com"
                       />
@@ -72,7 +84,9 @@ function SignUpPage() {
                       <input
                         type="password"
                         value={formData.password}
-                        onChange={(e) => setFormData({...formData, password: e.target.value})}
+                        onChange={(e) =>
+                          setFormData({ ...formData, password: e.target.value })
+                        }
                         className="input"
                         placeholder="Enter your password"
                       />
@@ -80,11 +94,15 @@ function SignUpPage() {
                   </div>
 
                   {/* SUBMIT BUTTON */}
-                  <button className="auth-btn" type="submit" disabled={isSigningUp}>
+                  <button
+                    className="auth-btn"
+                    type="submit"
+                    disabled={isSigningUp}
+                  >
                     {isSigningUp ? (
-                    <LoaderIcon className="w-full h-5 animate-spin text-center" />
+                      <LoaderIcon className="w-full h-5 animate-spin text-center" />
                     ) : (
-                      'Create Account'
+                      "Create Account"
                     )}
                   </button>
                 </form>
@@ -98,13 +116,15 @@ function SignUpPage() {
             </div>
             {/* IMAGE COLUMN - RIGHT SIDE */}
             <div className="md:w-1/2 hidden md:flex md:flex-col items-center justify-center p-6 bg-gradient-to-bl from-slate-800/200 to-transparent">
-              <img 
-                src="chatify-logo.png"
-                alt="Chatify Logo"
+              <img
+                src="chatter-logo.png"
+                alt="Chatter Logo"
                 className="w-full h-auto object-contain"
               />
               <div className="mt-6 text-center">
-                <h3 className="text-xl font-medium text-cyan-400">Start chatting online today</h3>
+                <h3 className="text-xl font-medium text-cyan-400">
+                  Start chatting online today
+                </h3>
               </div>
             </div>
           </div>
