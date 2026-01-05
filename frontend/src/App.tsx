@@ -18,7 +18,7 @@ function App() {
 
   function ProtectedRoute({ children }: { children: JSX.Element }) {
     if (isCheckingAuth) {
-      return <PageLoader publicRoute={false} />;
+      return <PageLoader />;
     }
 
     return authUser ? children : <Navigate to="/login" replace />;
@@ -26,7 +26,7 @@ function App() {
 
   function PublicRoute({ children }: { children: JSX.Element }) {
     if (isCheckingAuth) {
-      return <PageLoader publicRoute={true} />;
+      return <PageLoader />;
     }
 
     return !authUser ? children : <Navigate to="/" replace />;
