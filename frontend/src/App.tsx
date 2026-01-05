@@ -5,6 +5,7 @@ import SignUpPage from "./pages/SignUpPage";
 import { useAuthStore } from "./store/useAuthStore";
 import { useEffect } from "react";
 import PageLoader from "./components/PageLoader";
+import type { JSX } from "react";
 
 import { Toaster } from "react-hot-toast";
 
@@ -15,7 +16,21 @@ function App() {
     checkAuth();
   }, [checkAuth]);
 
-  if (isCheckingAuth) return <PageLoader />;
+  function ProtectedRoute({ children }: { children: JSX.Element }) {
+    if (isCheckingAuth) {
+      return <PageLoader publicRoute={false} />;
+    }
+
+    return authUser ? children : <Navigate to="/login" replace />;
+  }
+
+  function PublicRoute({ children }: { children: JSX.Element }) {
+    if (isCheckingAuth) {
+      return <PageLoader publicRoute={true} />;
+    }
+
+    return !authUser ? children : <Navigate to="/" replace />;
+  }
 
   return (
     <div className="min-h-screen bg-slate-900 relative flex items-center justify-center overflow-hidden">
@@ -27,15 +42,27 @@ function App() {
       <Routes>
         <Route
           path="/"
-          element={authUser ? <ChatPage /> : <Navigate to={"/login"} />}
+          element={
+            <ProtectedRoute>
+              <ChatPage />
+            </ProtectedRoute>
+          }
         />
         <Route
           path="/login"
-          element={!authUser ? <LoginPage /> : <Navigate to={"/"} />}
+          element={
+            <PublicRoute>
+              <LoginPage />
+            </PublicRoute>
+          }
         />
         <Route
           path="/signup"
-          element={!authUser ? <SignUpPage /> : <Navigate to={"/"} />}
+          element={
+            <PublicRoute>
+              <SignUpPage />
+            </PublicRoute>
+          }
         />
         <Route path="*" element={<Navigate to={"/login"} />} />
       </Routes>
