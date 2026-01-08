@@ -4,10 +4,13 @@ import toast from "react-hot-toast";
 import { AxiosError } from "axios";
 import { io, Socket } from "socket.io-client";
 
-const BASE_URL =
+const API_URL = import.meta.env.VITE_API_URL;
+
+const SOCKET_URL =
   import.meta.env.MODE === "development"
     ? "http://localhost:3000"
-    : import.meta.env.VITE_API_URL || "/";
+    : import.meta.env.VITE_SOCKET_URL ||
+      (API_URL ? API_URL.replace(/\/api\/?$/, "") : "/");
 
 interface AuthUser {
   name: string;
@@ -138,11 +141,18 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
     const { authUser } = get();
     if (!authUser || get().socket?.connected) return;
 
-    const socket = io(BASE_URL, { withCredentials: true });
+    const socket = io(SOCKET_URL, {
+      withCredentials: true,
+      transports: ["websocket", "polling"],
+    });
 
     socket.connect();
 
     set({ socket }); // socket: socket
+
+    socket.on("connect_error", (err) => {
+      console.log("Socket connect_error:", err?.message || err);
+    });
 
     // listen for online users event
     socket.on("getOnlineUsers", (userIds) => {
